@@ -12,11 +12,11 @@ public enum LogoEffect: String, CaseIterable, Sendable {
 
     public var title: String {
         switch self {
-        case .none: "None"
-        case .breathe: "Breathe"
-        case .pulse: "Pulse"
-        case .heartbeat: "Heartbeat"
-        case .sound: "Sound"
+        case .none: L("None")
+        case .breathe: L("Breathe")
+        case .pulse: L("Pulse")
+        case .heartbeat: L("Heartbeat")
+        case .sound: L("Sound")
         }
     }
 

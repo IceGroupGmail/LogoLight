@@ -65,17 +65,19 @@ public enum LogoLightError: Error, Equatable, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .cancelled:
-            "The request was cancelled."
+            L("The request was cancelled.")
         case let .commandFailed(exitCode, message):
-            message.isEmpty ? "The command failed with exit code \(exitCode)." : message
+            message.isEmpty ? String(format: L("The command failed with exit code %d."), exitCode) : message
         case .unsupportedMac:
-            "This Mac doesn't have an illuminated Apple logo. It requires a MacBook Pro with PROLED XDR Display."
+            L("This Mac doesn't have an illuminated Apple logo. It requires a MacBook Pro with PROLED XDR Display.")
         case let .notApplied(expected):
-            "The setting was saved, but the logo didn't turn \(expected.rawValue)."
+            expected == .on
+                ? L("The setting was saved, but the logo didn't turn on.")
+                : L("The setting was saved, but the logo didn't turn off.")
         case let .unsupportedUserName(name):
-            "Password-free toggling isn't available for the user name “\(name)”."
+            String(format: L("Password-free toggling isn't available for the user name “%@”."), name)
         case .passwordlessRuleNotHonored:
-            "The password-free rule was installed, but sudo isn't honoring it. Check /etc/sudoers for an #includedir line."
+            L("The password-free rule was installed, but sudo isn't honoring it. Check /etc/sudoers for an #includedir line.")
         }
     }
 }

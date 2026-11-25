@@ -1,0 +1,77 @@
+/* LogoLight 的繁體中文介面。英文原文是鍵：找不到的鍵會原樣顯示英文，所以漏譯只會退回英文。 */
+
+/* 選單 */
+"Disable Password" = "停用密碼";
+"Turn the logo on and off without entering your password. Uncheck to ask for it again." = "開關標誌時無需輸入密碼。取消勾選則每次都要求輸入密碼。";
+"Lit with Lid Closed" = "闔上上蓋仍亮";
+"On power or a display" = "接電源或有外接顯示器時";
+"Keep the logo lit when you close the lid, on power or with an external display. On power, your Mac stays awake with the lid closed. The keyboard stays dark." = "闔上上蓋後標誌保持點亮（接電源或接有外接顯示器時）。接電源時，Mac 在闔蓋狀態下保持喚醒；鍵盤保持熄滅。";
+"Launch at Login" = "登入時啟動";
+"Quit LogoLight" = "結束 LogoLight";
+"LogoLight" = "LogoLight";
+"Option-click to toggle" = "按住 Option 點按可切換";
+"LogoLight couldn't make the change" = "LogoLight 無法完成變更";
+"LogoLight can't follow the sound" = "LogoLight 無法跟隨聲音";
+"LogoLight can't hear the sound" = "LogoLight 無法聽到聲音";
+"To let the logo follow the sound your Mac plays, allow LogoLight under System Audio Recording Only in System Settings › Privacy & Security › Screen & System Audio Recording, then turn Sound on again. Nothing is recorded." = "要讓標誌跟隨 Mac 播放的聲音，請在「系統設定 › 隱私權與安全性 › 螢幕與系統音訊錄製」中，於「僅系統音訊錄製」類別下允許 LogoLight，然後重新開啟「聲音」。不會錄製任何內容。";
+"Open System Settings" = "開啟系統設定";
+"Cancel" = "取消";
+"Couldn't change Launch at Login" = "無法變更「登入時啟動」";
+
+/* 控制面板 */
+"Battery" = "電池";
+"Charging" = "充電";
+"EFFECTS" = "效果";
+"MORSE CODE" = "摩斯電碼";
+"Brightness" = "亮度";
+"Brightness follows battery" = "亮度隨電量變化";
+"The logo shows the battery's charge: normal brightness when it's full, dimmer as it runs down." = "標誌顯示電池電量：充飽時為正常亮度，電量下降時逐漸變暗。";
+"Breathe while charging" = "充電時呼吸";
+"While the battery charges, the logo breathes like the old MacBook sleep light, then goes back to your effect." = "電池充電期間，標誌會像舊款 MacBook 的睡眠指示燈一樣呼吸，充完電後回到你選擇的效果。";
+"The logo glows with the sound your Mac is playing: brighter as it gets louder, peaking at your brightness. macOS asks once to let LogoLight hear it." = "標誌隨 Mac 正在播放的聲音發光：聲音越大越亮，峰值即你設定的亮度。macOS 會詢問一次權限，允許 LogoLight 聽到系統聲音。";
+"Message" = "訊息";
+"Morse code message" = "摩斯電碼訊息";
+"Play" = "播放";
+"Play Morse code" = "播放摩斯電碼";
+"Repeat until stopped" = "循環直到停止";
+"Repeat Morse code" = "循環播放摩斯電碼";
+"On" = "開";
+"Off" = "關";
+"Letters, digits and punctuation" = "字母、數字與標點";
+"Stop" = "停止";
+"Playing" = "播放中";
+"Apple logo backlight" = "Apple 標誌背光";
+"Live view of the Apple logo" = "Apple 標誌即時預覽";
+
+/* 狀態 */
+"Needs a MacBook Pro with PROLED XDR Display" = "需要配備 PROLED XDR 顯示器的 MacBook Pro";
+"No illuminated logo on this Mac" = "此 Mac 沒有可發光的標誌";
+"Logo illumination off" = "標誌已關閉";
+"Logo illumination on" = "標誌已開啟";
+"Logo illumination unknown" = "標誌狀態未知";
+
+/* 效果 */
+"None" = "無";
+"Breathe" = "呼吸";
+"Pulse" = "脈衝";
+"Heartbeat" = "心跳";
+"Sound" = "聲音";
+
+/* 錯誤 */
+"The request was cancelled." = "請求已取消。";
+"The command failed with exit code %d." = "指令執行失敗，結束碼 %d。";
+"This Mac doesn't have an illuminated Apple logo. It requires a MacBook Pro with PROLED XDR Display." = "此 Mac 沒有可發光的 Apple 標誌，需要配備 PROLED XDR 顯示器的 MacBook Pro。";
+"The setting was saved, but the logo didn't turn on." = "設定已儲存，但標誌沒有開啟。";
+"The setting was saved, but the logo didn't turn off." = "設定已儲存，但標誌沒有關閉。";
+"Password-free toggling isn't available for the user name “%@”." = "使用者名稱「%@」無法使用免密碼切換。";
+"The password-free rule was installed, but sudo isn't honoring it. Check /etc/sudoers for an #includedir line." = "免密碼規則已安裝，但 sudo 未遵循它。請檢查 /etc/sudoers 中是否有 #includedir 行。";
+"Following the sound needs macOS 14.2 or later." = "跟隨聲音需要 macOS 14.2 或以上版本。";
+"LogoLight couldn't listen to the sound your Mac plays (Core Audio error %d). Allow LogoLight under System Audio Recording Only in System Settings › Privacy & Security › Screen & System Audio Recording." = "LogoLight 無法聆聽 Mac 播放的聲音（Core Audio 錯誤 %d）。請在「系統設定 › 隱私權與安全性 › 螢幕與系統音訊錄製」中，於「僅系統音訊錄製」類別下允許 LogoLight。";
+
+/* 控制中心控制項目 */
+"Turns the logo on the back of the lid on or off." = "開啟或關閉上蓋背面的標誌。";
+"Turn LogoLight On or Off" = "開啟或關閉 LogoLight";
+"Turns the logo on the back of the lid on or off, through LogoLight." = "透過 LogoLight 開啟或關閉上蓋背面的標誌。";
+"LogoLight didn't respond. Open LogoLight and try again." = "LogoLight 沒有回應。請開啟 LogoLight 後再試一次。";
+"LogoLight is busy, e.g. waiting for your password. Try again in a moment." = "LogoLight 忙碌中，例如正在等待你輸入密碼。請稍後再試一次。";
+"This Mac has no illuminated logo." = "此 Mac 沒有可發光的標誌。";

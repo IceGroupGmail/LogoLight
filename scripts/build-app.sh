@@ -35,6 +35,15 @@ fill() {
     plutil -lint "$2" >/dev/null
 }
 
+# The app's text in each language it has: Resources/<language>.lproj/Localizable.strings (the English
+# text is the key) and InfoPlist.strings (the permission prompt). `$1` is a bundle (the app or its
+# Control Center extension).
+copy_translations() {
+    for lproj in Resources/*.lproj/; do
+        cp -R "$lproj" "$1/Contents/Resources/$(basename "$lproj")"
+    done
+}
+
 echo "==> Building release binary"
 # SwiftPM's default build system records the deployment target (14.0) as the SDK the app was built
 # with, so newer macOS treats it as an old app. Control Center's gallery then showed a blank icon for
@@ -53,6 +62,7 @@ fill Resources/Info.plist "$APP/Contents/Info.plist"
 # Drawn by scripts/make-icon.swift. With Xcode's actool, it also goes in an asset catalog
 # (CFBundleIconName), which newer parts of macOS, like Control Center's gallery, look for.
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+copy_translations "$APP"
 if ACTOOL="$(xcrun --find actool 2>/dev/null)"; then
     ASSETS="build/assets/Assets.xcassets"
     rm -rf build/assets
@@ -94,6 +104,8 @@ if [ -n "$PROCESSOR" ] && [ "${SDK_MAJOR:-0}" -ge 26 ]; then
     TOOLCHAIN="$(cd "$(dirname "$PROCESSOR")/../.." && pwd)"
     rm -rf "$OBJ"
     mkdir -p "$OBJ" "$APPEX/Contents/MacOS" "$APPEX/Contents/Resources"
+    # The control's own text (its description, and why it couldn't switch the logo).
+    copy_translations "$APPEX"
     SOURCES="Controls/BacklightControl.swift Sources/LogoLightCore/ControlLink.swift"
     # Xcode 27's swiftc takes the protocol list as its own option. Xcode 26's doesn't know that one
     # ("unknown argument"), but its frontend takes the same list under another name.

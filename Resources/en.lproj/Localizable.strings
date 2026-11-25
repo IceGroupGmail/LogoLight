@@ -1,0 +1,3 @@
+/* English is the source language: `L("…")` passes the English text as the key, and a key that isn't
+   here comes back as itself, so this file stays empty on purpose. It exists so that a Mac set to
+   English picks this localization rather than one of the translations in the other folders. */

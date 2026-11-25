@@ -1,0 +1,2 @@
+/* 系统请求「仅系统音频录制」权限时显示。 */
+NSAudioCaptureUsageDescription = "打开「声音」效果后，LogoLight 会监听 Mac 播放的声音，让 Apple 标志随之发光。不会录制或保存任何内容。";

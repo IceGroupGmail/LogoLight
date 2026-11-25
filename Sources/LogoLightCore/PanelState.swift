@@ -51,12 +51,12 @@ public struct PanelState: Equatable, Sendable {
         self.breathesWhileCharging = breathesWhileCharging
         self.morse = canControlDirectly ? morse : nil
         self.morseLoops = morseLoops
-        message = status.isSupported ? nil : "Needs a MacBook Pro with PROLED XDR Display"
+        message = status.isSupported ? nil : L("Needs a MacBook Pro with PROLED XDR Display")
         (symbolName, symbolDescription) = switch (status.isSupported, setting) {
-        case (false, _): ("lightbulb.slash", "No illuminated logo on this Mac")
-        case (true, .off): ("lightbulb.slash", "Logo illumination off")
-        case (true, .on): ("lightbulb.fill", "Logo illumination on")
-        case (true, nil): ("lightbulb", "Logo illumination unknown")
+        case (false, _): ("lightbulb.slash", L("No illuminated logo on this Mac"))
+        case (true, .off): ("lightbulb.slash", L("Logo illumination off"))
+        case (true, .on): ("lightbulb.fill", L("Logo illumination on"))
+        case (true, nil): ("lightbulb", L("Logo illumination unknown"))
         }
     }
 

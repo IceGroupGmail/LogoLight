@@ -164,27 +164,27 @@ final class StatusItemController: NSObject, NSMenuDelegate {
 
         // Checked when the sudoers rule is installed. Without direct control, the first password
         // installs it, so it's only needed once.
-        passwordlessItem.title = "Disable Password"
+        passwordlessItem.title = L("Disable Password")
         passwordlessItem.target = self
         passwordlessItem.action = #selector(togglePasswordless)
-        passwordlessItem.toolTip = "Turn the logo on and off without entering your password. Uncheck to ask for it again."
+        passwordlessItem.toolTip = L("Turn the logo on and off without entering your password. Uncheck to ask for it again.")
 
         // The widest item: `NSMenu` measures the menu 160 points wide with it, inside the panel's 170.
         // The second line says what it needs: the Mac on power (the app then keeps it awake when the
         // lid closes) or an external display. Otherwise closing the lid sleeps the Mac, and the logo
         // goes dark with it, which looked as if the option didn't work.
-        lidClosedItem.title = "Lit with Lid Closed"
-        if #available(macOS 14.4, *) { lidClosedItem.subtitle = "On power or a display" }
+        lidClosedItem.title = L("Lit with Lid Closed")
+        if #available(macOS 14.4, *) { lidClosedItem.subtitle = L("On power or a display") }
         lidClosedItem.target = self
         lidClosedItem.action = #selector(toggleLightsWithLidClosed)
-        lidClosedItem.toolTip = "Keep the logo lit when you close the lid, on power or with an external display. On power, your Mac stays awake with the lid closed. The keyboard stays dark."
+        lidClosedItem.toolTip = L("Keep the logo lit when you close the lid, on power or with an external display. On power, your Mac stays awake with the lid closed. The keyboard stays dark.")
 
-        launchAtLoginItem.title = "Launch at Login"
+        launchAtLoginItem.title = L("Launch at Login")
         launchAtLoginItem.target = self
         launchAtLoginItem.action = #selector(toggleLaunchAtLogin)
 
         // No ⌘Q: its shortcut column would make the whole menu wider than the panel.
-        let quitItem = NSMenuItem(title: "Quit LogoLight", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
+        let quitItem = NSMenuItem(title: L("Quit LogoLight"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
 
         menu.items = [
             panelItem,
@@ -365,7 +365,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         image?.isTemplate = true
         button.image = image
         button.appearsDisabled = !state.isSupported
-        button.toolTip = "LogoLight: \(state.symbolDescription)\nOption-click to toggle"
+        button.toolTip = "\(L("LogoLight")): \(state.symbolDescription)\n\(L("Option-click to toggle"))"
     }
 
     // MARK: - Actions
@@ -406,7 +406,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             } catch LogoLightError.cancelled {
                 // The user closed the password dialog (corebrightnessd didn't take the change).
             } catch {
-                report(error, title: "LogoLight couldn't make the change")
+                report(error, title: L("LogoLight couldn't make the change"))
             }
             next = queuedSetting == target ? nil : queuedSetting
             queuedSetting = nil
@@ -466,17 +466,17 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         whenMenuClosed { [weak self] in
             guard let self else { return }
             guard case .cannotListen = error as? SoundError else {
-                return show(error, title: "LogoLight can't follow the sound")
+                return show(error, title: L("LogoLight can't follow the sound"))
             }
             NSApp.activate()
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "LogoLight can't hear the sound"
-            alert.informativeText = "To let the logo follow the sound your Mac plays, allow LogoLight under System Audio "
+            alert.messageText = L("LogoLight can't hear the sound")
+            alert.informativeText = L("To let the logo follow the sound your Mac plays, allow LogoLight under System Audio "
                 + "Recording Only in System Settings › Privacy & Security › Screen & System Audio Recording, then turn "
-                + "Sound on again. Nothing is recorded."
-            alert.addButton(withTitle: "Open System Settings")
-            alert.addButton(withTitle: "Cancel")
+                + "Sound on again. Nothing is recorded.")
+            alert.addButton(withTitle: L("Open System Settings"))
+            alert.addButton(withTitle: L("Cancel"))
             if alert.runModal() == .alertFirstButtonReturn,
                let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_AudioCapture") {
                 NSWorkspace.shared.open(url)
@@ -636,7 +636,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         do {
             try LaunchAtLogin.setEnabled(!LaunchAtLogin.isEnabled)
         } catch {
-            report(error, title: "Couldn't change Launch at Login")
+            report(error, title: L("Couldn't change Launch at Login"))
         }
         isLaunchAtLoginEnabled = LaunchAtLogin.isEnabled
         updateMenu()
@@ -663,7 +663,7 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             } catch LogoLightError.cancelled {
                 // The user closed the password dialog.
             } catch {
-                report(error, title: "LogoLight couldn't make the change")
+                report(error, title: L("LogoLight couldn't make the change"))
             }
         }
     }

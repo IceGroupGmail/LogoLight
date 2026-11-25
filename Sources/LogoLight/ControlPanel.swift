@@ -60,16 +60,16 @@ final class ControlPanel: NSView {
     private let brightnessSlider = LogoSlider()
     /// Under the slider, in its card: the battery indicator, which has the brightness follow the charge.
     private let batteryTile = IconTile(symbol: "battery.75percent", color: .systemGreen)
-    private let batteryLabel = NSTextField(labelWithString: "Battery")
+    private let batteryLabel = NSTextField(labelWithString: L("Battery"))
     private let batterySwitch = LogoSwitch()
     private var batteryRow = NSView()
     /// Under it: the charging light, which has the logo breathe while the battery charges.
     private let chargingTile = IconTile(symbol: "bolt.fill", color: .systemYellow)
-    private let chargingLabel = NSTextField(labelWithString: "Charging")
+    private let chargingLabel = NSTextField(labelWithString: L("Charging"))
     private let chargingSwitch = LogoSwitch()
     private var chargingRow = NSView()
     private let messageLabel = NSTextField(wrappingLabelWithString: "")
-    private let effectsHeader = NSTextField(labelWithString: "EFFECTS")
+    private let effectsHeader = NSTextField(labelWithString: L("EFFECTS"))
     /// Each line of text outside the cards is in one of these, which indents it (and is what's hidden).
     private let messageContainer = NSStackView()
     private let effectsHeaderContainer = NSStackView()
@@ -77,7 +77,7 @@ final class ControlPanel: NSView {
     private var effectRows: [(effect: LogoEffect, tile: IconTile, label: NSTextField, toggle: LogoSwitch)] = []
     /// The Sound effect's row and the hairline above it, hidden where the sound can't be heard.
     private var soundRows: [NSView] = []
-    private let morseHeader = NSTextField(labelWithString: "MORSE CODE")
+    private let morseHeader = NSTextField(labelWithString: L("MORSE CODE"))
     private let morseHeaderContainer = NSStackView()
     private let morseCard = Card()
     private let morseRow = NSView()
@@ -138,7 +138,7 @@ final class ControlPanel: NSView {
         for view in soundRows { view.isHidden = !state.showsSound }
         morseField.isEnabled = state.canAdjust
         playButton.isActive = state.isSendingMorse
-        playButton.toolTip = state.isSendingMorse ? "Stop" : "Play"
+        playButton.toolTip = state.isSendingMorse ? L("Stop") : L("Play")
         loopButton.isActive = state.morseLoops
         updateMorseButtons()
         greyOut([brightnessRow: !state.canChangeBrightness, batteryRow: !state.canAdjust,
@@ -190,7 +190,7 @@ final class ControlPanel: NSView {
         // view), then the live view, then the brightness.
         logoSwitch.target = self
         logoSwitch.action = #selector(logoSwitchChanged)
-        logoSwitch.setAccessibilityLabel("Apple logo backlight")
+        logoSwitch.setAccessibilityLabel(L("Apple logo backlight"))
         let logoCard = Card()
         logoCard.add([row(tile: logoTile, label: logoLabel, toggle: logoSwitch)])
         addFullWidth(logoCard)
@@ -200,19 +200,19 @@ final class ControlPanel: NSView {
         dimIcon.image = Self.symbol("sun.min.fill", size: 11)
         brightIcon.image = Self.symbol("sun.max.fill", size: 15)
         for icon in [dimIcon, brightIcon] { icon.contentTintColor = .secondaryLabelColor }
-        brightnessSlider.setAccessibilityLabel("Brightness")
+        brightnessSlider.setAccessibilityLabel(L("Brightness"))
         brightnessSlider.onChange = { [weak self] in self?.onBrightnessChanged?($0) }
         layOutBrightnessRow()
         batterySwitch.target = self
         batterySwitch.action = #selector(batterySwitchChanged)
-        batterySwitch.setAccessibilityLabel("Brightness follows battery")
+        batterySwitch.setAccessibilityLabel(L("Brightness follows battery"))
         batteryRow = row(tile: batteryTile, label: batteryLabel, toggle: batterySwitch)
-        batteryRow.toolTip = "The logo shows the battery's charge: normal brightness when it's full, dimmer as it runs down."
+        batteryRow.toolTip = L("The logo shows the battery's charge: normal brightness when it's full, dimmer as it runs down.")
         chargingSwitch.target = self
         chargingSwitch.action = #selector(chargingSwitchChanged)
-        chargingSwitch.setAccessibilityLabel("Breathe while charging")
+        chargingSwitch.setAccessibilityLabel(L("Breathe while charging"))
         chargingRow = row(tile: chargingTile, label: chargingLabel, toggle: chargingSwitch)
-        chargingRow.toolTip = "While the battery charges, the logo breathes like the old MacBook sleep light, then goes back to your effect."
+        chargingRow.toolTip = L("While the battery charges, the logo breathes like the old MacBook sleep light, then goes back to your effect.")
         brightnessCard.add([brightnessRow, Separator(), batteryRow, Separator(), chargingRow])
         addFullWidth(brightnessCard)
 
@@ -242,8 +242,8 @@ final class ControlPanel: NSView {
             let row = row(tile: tile, label: label, toggle: toggle)
             rows.append(row)
             if effect == .sound {
-                row.toolTip = "The logo glows with the sound your Mac is playing: brighter as it gets louder, "
-                    + "peaking at your brightness. macOS asks once to let LogoLight hear it."
+                row.toolTip = L("The logo glows with the sound your Mac is playing: brighter as it gets louder, "
+                    + "peaking at your brightness. macOS asks once to let LogoLight hear it.")
                 soundRows = [rows[rows.count - 2], row]
             }
         }
@@ -262,7 +262,7 @@ final class ControlPanel: NSView {
 
     /// The message field, then play and loop, in one row as narrow as the effects'.
     private func layOutMorseRow() {
-        morseField.placeholderString = "Message"
+        morseField.placeholderString = L("Message")
         morseField.font = .systemFont(ofSize: 12)
         morseField.bezelStyle = .roundedBezel
         morseField.lineBreakMode = .byTruncatingTail
@@ -272,16 +272,16 @@ final class ControlPanel: NSView {
         morseField.delegate = self
         morseField.target = self
         morseField.action = #selector(morseFieldReturned) // Return plays it
-        morseField.setAccessibilityLabel("Morse code message")
+        morseField.setAccessibilityLabel(L("Morse code message"))
 
-        playButton.toolTip = "Play"
-        playButton.setAccessibilityLabel("Play Morse code")
+        playButton.toolTip = L("Play")
+        playButton.setAccessibilityLabel(L("Play Morse code"))
         playButton.target = self
         playButton.action = #selector(playPressed)
-        loopButton.toolTip = "Repeat until stopped"
-        loopButton.setAccessibilityLabel("Repeat Morse code")
-        loopButton.activeDescription = "On"
-        loopButton.inactiveDescription = "Off"
+        loopButton.toolTip = L("Repeat until stopped")
+        loopButton.setAccessibilityLabel(L("Repeat Morse code"))
+        loopButton.activeDescription = L("On")
+        loopButton.inactiveDescription = L("Off")
         loopButton.target = self
         loopButton.action = #selector(loopPressed)
         for view in [morseField, playButton, loopButton] as [NSView] {
@@ -314,7 +314,7 @@ final class ControlPanel: NSView {
         playButton.isEnabled = canAdjust && (MorseCode.canSend(morseField.stringValue) || playButton.isActive)
         loopButton.isEnabled = canAdjust
         let notation = MorseCode.notation(morseField.stringValue)
-        morseField.toolTip = notation.isEmpty ? "Letters, digits and punctuation" : notation
+        morseField.toolTip = notation.isEmpty ? L("Letters, digits and punctuation") : notation
     }
 
     private func row(tile: IconTile, label: NSTextField, toggle: LogoSwitch) -> NSView {
@@ -462,7 +462,7 @@ final class SymbolButton: NSControl {
     private var isPressed = false { didSet { needsDisplay = true } }
 
     /// What VoiceOver says while it's active, and while it isn't.
-    var activeDescription = "Playing"
+    var activeDescription = L("Playing")
     var inactiveDescription: String?
 
     /// Whether this button's action is under way (pressing it again stops it), or, for a switch,
@@ -599,7 +599,7 @@ private final class LogoPreview: NSView {
 
         setAccessibilityElement(true)
         setAccessibilityRole(.image)
-        setAccessibilityLabel("Live view of the Apple logo")
+        setAccessibilityLabel(L("Live view of the Apple logo"))
     }
 
     @available(*, unavailable)
@@ -1049,11 +1049,11 @@ enum PanelRenderer {
             addSubview(panel)
             var y = panel.frame.maxY
             y = addSeparator(at: y)
-            y = addItem("Disable Password", checked: true, at: y)
-            y = addItem("Lit with Lid Closed", subtitle: "On power or a display", at: y)
-            y = addItem("Launch at Login", checked: true, at: y)
+            y = addItem(L("Disable Password"), checked: true, at: y)
+            y = addItem(L("Lit with Lid Closed"), subtitle: L("On power or a display"), at: y)
+            y = addItem(L("Launch at Login"), checked: true, at: y)
             y = addSeparator(at: y)
-            y = addItem("Quit LogoLight", at: y)
+            y = addItem(L("Quit LogoLight"), at: y)
             setFrameSize(NSSize(width: panel.bounds.width, height: y + Self.padding))
         }
 

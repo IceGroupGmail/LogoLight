@@ -24,11 +24,11 @@ public enum SoundError: Error, Equatable, LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .unsupportedSystem:
-            "Following the sound needs macOS 14.2 or later."
+            L("Following the sound needs macOS 14.2 or later.")
         case let .cannotListen(status):
-            "LogoLight couldn't listen to the sound your Mac plays (Core Audio error \(status)). "
+            String(format: L("LogoLight couldn't listen to the sound your Mac plays (Core Audio error %d). "
                 + "Allow LogoLight under System Audio Recording Only in System Settings › Privacy & Security "
-                + "› Screen & System Audio Recording."
+                + "› Screen & System Audio Recording."), status)
         }
     }
 }
