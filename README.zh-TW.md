@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Ark0N/LogoLight/releases/latest/download/LogoLight-1.4.0.zip"><img src="docs/download-button.png" height="56" alt="下載 LogoLight"></a>
+  <a href="https://github.com/Ark0N/LogoLight/releases/latest/download/LogoLight-1.4.1.zip"><img src="docs/download-button.png" height="56" alt="下載 LogoLight"></a>
   &nbsp;
   <a href="https://buymeacoffee.com/arkon"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="56" alt="Buy me a coffee"></a>
 </p>
@@ -98,7 +98,7 @@
 
 ## 安裝
 
-1. **[下載 LogoLight](https://github.com/Ark0N/LogoLight/releases/latest/download/LogoLight-1.4.0.zip)**。它使用 Developer ID 簽署，並通過 Apple 公證。
+1. **[下載 LogoLight](https://github.com/Ark0N/LogoLight/releases/latest/download/LogoLight-1.4.1.zip)**。它使用 Developer ID 簽署，並通過 Apple 公證。
 2. 解壓縮後把 **LogoLight** 移到「應用程式」資料夾並開啟。它會常駐在選單列。
 
 或透過 [Homebrew](https://brew.sh)：
