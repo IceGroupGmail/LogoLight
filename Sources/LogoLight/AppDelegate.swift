@@ -6,6 +6,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItemController: StatusItemController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Before any text is made: the language picked in the menu last time, or macOS's.
+        AppLanguage.applySaved()
+
         #if DEBUG
         // Draws the control panel to PNGs and quits, without touching the logo (debug builds only).
         if let folder = ProcessInfo.processInfo.environment["LOGOLIGHT_RENDER_PANEL"] {
@@ -27,6 +30,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if ProcessInfo.processInfo.environment["LOGOLIGHT_OPEN_MENU"] != nil {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.statusItemController?.openMenu()
+            }
+        }
+        // Switches language once the app is up, to check that the menu and the panel are rebuilt
+        // without relaunching (debug builds only).
+        if let rawValue = ProcessInfo.processInfo.environment["LOGOLIGHT_SWITCH_LANGUAGE"],
+           let language = AppLanguage(rawValue: rawValue) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.statusItemController?.rebuild(in: language)
             }
         }
         #endif

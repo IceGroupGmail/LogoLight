@@ -31,7 +31,11 @@ struct StringsFile {
 
 /// Every key the code asks for with `L("…")` in `file`, reading a call's literals across a `+`.
 func localizationKeys(in file: String) throws -> [String] {
+    // Comment lines are skipped: a doc comment can show a call as an example.
     let text = try String(contentsOfFile: file, encoding: .utf8)
+        .split(separator: "\n", omittingEmptySubsequences: false)
+        .filter { !$0.trimmingCharacters(in: .whitespaces).hasPrefix("//") }
+        .joined(separator: "\n")
     var keys: [String] = []
     var searchStart = text.startIndex
     while let call = text.range(of: "L(\"", range: searchStart..<text.endIndex) {
@@ -141,6 +145,46 @@ func localizationTests(_ harness: TestHarness) {
             harness.expect(text.contains("NSAudioCaptureUsageDescription"), "\(language) has no audio prompt")
             harness.expect(!text.contains("logo can glow with it"), "\(language) still has the English prompt")
         }
+    }
+
+    harness.test("a language picked in the menu is used at once") {
+        let savedBundle = Localized.bundle
+        let savedLanguage = Localized.language
+        defer {
+            Localized.bundle = savedBundle
+            Localized.language = savedLanguage
+        }
+        // The repository's Resources is the app's layout without a bundle around it.
+        guard let resources = Bundle(path: repository.appendingPathComponent("Resources").path) else {
+            return harness.expect(false, "no Resources bundle at \(repository.path)")
+        }
+        Localized.bundle = resources
+        Localized.language = "zh-Hans"
+        harness.expectEqual(L("Breathe"), "呼吸")
+        harness.expectEqual(L("Quit LogoLight"), "退出 LogoLight")
+        Localized.language = "zh-Hant"
+        harness.expectEqual(L("Breathe"), "呼吸")
+        harness.expectEqual(L("Quit LogoLight"), "結束 LogoLight")
+        // No choice follows macOS, which is English here (the test binary has no .lproj).
+        Localized.bundle = savedBundle
+        Localized.language = nil
+        harness.expectEqual(L("Breathe"), "Breathe")
+    }
+
+    harness.test("the language picked is remembered") {
+        let defaults = UserDefaults.standard
+        let old = defaults.string(forKey: AppLanguage.defaultsKey)
+        let oldLanguage = Localized.language
+        defer {
+            if let old { defaults.set(old, forKey: AppLanguage.defaultsKey) }
+            else { defaults.removeObject(forKey: AppLanguage.defaultsKey) }
+            Localized.language = oldLanguage
+        }
+        AppLanguage.set(.traditionalChinese)
+        harness.expectEqual(AppLanguage.saved, .traditionalChinese)
+        harness.expectEqual(Localized.language ?? "", "zh-Hant")
+        AppLanguage.set(.system)
+        harness.expectEqual(Localized.language ?? "", "")
     }
 
     harness.test("without the app's .lproj folders, English comes back") {

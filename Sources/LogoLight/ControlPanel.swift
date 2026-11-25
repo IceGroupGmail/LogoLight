@@ -1051,6 +1051,8 @@ enum PanelRenderer {
             y = addSeparator(at: y)
             y = addItem(L("Disable Password"), checked: true, at: y)
             y = addItem(L("Lit with Lid Closed"), subtitle: L("On power or a display"), at: y)
+            // Drawn as one line with what it is set to: a submenu can't be drawn offscreen.
+            y = addItem(L("Language"), subtitle: AppLanguage.saved.title, at: y)
             y = addItem(L("Launch at Login"), checked: true, at: y)
             y = addSeparator(at: y)
             y = addItem(L("Quit LogoLight"), at: y)

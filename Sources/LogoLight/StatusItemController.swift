@@ -12,10 +12,13 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let menu = NSMenu()
 
-    private let panel = ControlPanel(finish: MacFinish.current() ?? .spaceBlack)
+    /// Replaced when the language changes: its labels are made once, in the language in effect.
+    private var panel = ControlPanel(finish: MacFinish.current() ?? .spaceBlack)
     private let panelItem = NSMenuItem()
     private let passwordlessItem = NSMenuItem()
     private let lidClosedItem = NSMenuItem()
+    /// The language the app's text is in: macOS's, or one picked here, which takes effect at once.
+    private let languageItem = NSMenuItem()
     private var lidObserver: LidObserver?
     private let sleepBlocker = LidSleepBlocker()
     private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "LogoLight", category: "lid")
@@ -183,16 +186,58 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         launchAtLoginItem.target = self
         launchAtLoginItem.action = #selector(toggleLaunchAtLogin)
 
+        // Above Launch at Login: which language the app's text is in. Picking one shows it at once
+        // (`chooseLanguage(_:)`); "follow the system" is what it does otherwise.
+        languageItem.title = L("Language")
+        languageItem.submenu = languageSubmenu()
+
         // No ⌘Q: its shortcut column would make the whole menu wider than the panel.
         let quitItem = NSMenuItem(title: L("Quit LogoLight"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
 
         menu.items = [
             panelItem,
             .separator(),
-            passwordlessItem, lidClosedItem, launchAtLoginItem,
+            passwordlessItem, lidClosedItem, languageItem, launchAtLoginItem,
             .separator(),
             quitItem,
         ]
+    }
+
+    /// The language menu: following macOS, then each language in its own name, the one in effect
+    /// ticked.
+    private func languageSubmenu() -> NSMenu {
+        let submenu = NSMenu()
+        let saved = AppLanguage.saved
+        for language in AppLanguage.allCases {
+            let item = NSMenuItem(title: language.title, action: #selector(chooseLanguage(_:)), keyEquivalent: "")
+            item.target = self
+            item.representedObject = language.rawValue
+            item.state = language == saved ? .on : .off
+            submenu.addItem(item)
+        }
+        return submenu
+    }
+
+    /// Picks the language the app's text is in, and rebuilds the panel and the menu's own items in it
+    /// (their labels are made once, so a new panel replaces the old one). Everything else — the switch,
+    /// the brightness, the effects — lives in the controller, and `updateMenu()` puts it into the
+    /// new panel.
+    @objc private func chooseLanguage(_ sender: NSMenuItem) {
+        guard let rawValue = sender.representedObject as? String, let language = AppLanguage(rawValue: rawValue),
+              language != AppLanguage.saved
+        else { return }
+        rebuild(in: language)
+    }
+
+    /// Switches the app's text to `language` and rebuilds what it says. (A debug build can call it
+    /// at launch with `LOGOLIGHT_SWITCH_LANGUAGE`, to check the rebuild without clicking.)
+    func rebuild(in language: AppLanguage) {
+        AppLanguage.set(language)
+        let old = panel
+        panel = ControlPanel(finish: MacFinish.current() ?? .spaceBlack)
+        buildMenu()
+        old.removeFromSuperview()
+        updateMenu()
     }
 
     @objc private func statusItemClicked(_ sender: NSStatusBarButton) {

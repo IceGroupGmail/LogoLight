@@ -6,6 +6,8 @@
 "Lit with Lid Closed" = "合盖仍点亮";
 "On power or a display" = "接电源或有外接显示器时";
 "Keep the logo lit when you close the lid, on power or with an external display. On power, your Mac stays awake with the lid closed. The keyboard stays dark." = "合上盖子后标志保持点亮（接电源或接有外接显示器时）。接电源时，Mac 在合盖状态下保持唤醒；键盘保持熄灭。";
+"Language" = "语言";
+"Follow the system" = "跟随系统";
 "Launch at Login" = "登录时启动";
 "Quit LogoLight" = "退出 LogoLight";
 "LogoLight" = "LogoLight";
