@@ -107,6 +107,8 @@
 brew install --cask ark0n/tap/logolight
 ```
 
+**没有 Developer ID 证书的版本**——自己编译出来的，或别人拷给你的——没有经过公证，第一次打开会被「门禁」拦下。右键点击 **LogoLight** 选「打开」，在弹窗里再点一次「打开」；或者执行一次 `xattr -d com.apple.quarantine /Applications/LogoLight.app` 去掉隔离标记。上面的下载包已签名并公证，两步都不需要。
+
 **系统要求**：配备 PROLED XDR 显示屏的 MacBook Pro，以及 macOS 14 或更高版本（这类机器出厂即为 macOS 27）。在其他 Mac 上，LogoLight 可以打开，但会提示该机型没有可发光的标志。
 
 **界面语言**：提供英文、简体中文与繁体中文，默认跟随 macOS 的设置；菜单里的 **「语言」** 可随时改用其中一种，立即生效。

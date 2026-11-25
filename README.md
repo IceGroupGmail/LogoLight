@@ -102,6 +102,12 @@ Or with [Homebrew](https://brew.sh):
 brew install --cask ark0n/tap/logolight
 ```
 
+**A build without a Developer ID** — one you compiled yourself, or a copy someone handed you — is not
+notarized, so Gatekeeper stops it the first time. Right-click **LogoLight**, choose **Open**, then
+**Open** again in the dialog; or clear the quarantine flag once with
+`xattr -d com.apple.quarantine /Applications/LogoLight.app`. The download above is signed and
+notarized, so it doesn't need either.
+
 Needs a MacBook Pro with PROLED XDR Display and macOS 14 or later (these Macs ship with macOS 27).
 On other Macs, LogoLight opens but says the logo isn't available.
 
