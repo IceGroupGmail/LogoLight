@@ -109,6 +109,8 @@ brew install --cask ark0n/tap/logolight
 
 **系統需求**：配備 PROLED XDR 顯示器的 MacBook Pro，以及 macOS 14 或以上版本（這類機器出廠即為 macOS 27）。在其他 Mac 上，LogoLight 可以開啟，但會提示該機型沒有可發光的標誌。
 
+**介面語言**：提供英文、簡體中文與繁體中文，跟隨 macOS 的語言設定自動切換。
+
 ### 加入控制中心
 
 1. 點按選單列中的「控制中心」，再點底部的 **編輯控制項目**。

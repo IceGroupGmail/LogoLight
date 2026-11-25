@@ -105,6 +105,8 @@ brew install --cask ark0n/tap/logolight
 Needs a MacBook Pro with PROLED XDR Display and macOS 14 or later (these Macs ship with macOS 27).
 On other Macs, LogoLight opens but says the logo isn't available.
 
+LogoLight is in English, Simplified Chinese and Traditional Chinese: it follows the language macOS is set to.
+
 ### Add it to Control Center
 
 1. Click Control Center in the menu bar, then **Edit Controls** at the bottom.
