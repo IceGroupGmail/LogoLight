@@ -84,6 +84,8 @@ the output back (first done 2026-11-20). So:
   The switches are `LogoSwitch`, drawn by the app: AppKit's `NSSwitch` draws grey inside a menu until
   the menu's window becomes key, a moment after it opens, which looked slow. What the panel shows
   and greys out is worked out in `PanelState` (LogoLightCore), which has tests.
+  `LOGOLIGHT_SWITCH_LANGUAGE=zh-Hant .build/debug/LogoLight` switches the language a second after
+  launch, to check that the panel and the menu are rebuilt (the same call the menu item makes).
   `LOGOLIGHT_OPEN_MENU=1 .build/debug/LogoLight` opens the real menu. Quit LogoLight first, and
   don't use it while the user is working: it interrupts them, and the menu won't stay open.
 
