@@ -1,4 +1,8 @@
 <p align="center">
+  <b>Language</b>：<b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.zh-TW.md">繁體中文</a>
+</p>
+
+<p align="center">
   <img src="docs/banner.jpg" width="100%" alt="LogoLight: Control your glowing Apple logo. Turn it off, dim it, let it breathe or beat like a heart, or glow with your music. Right from the menu bar. Free, open source, for the MacBook Pro with PROLED XDR Display. Beside the text, LogoLight's live view shows a large lid with the Apple logo glowing, next to its menu with the LogoLight switch and Breathe switched on.">
 </p>
 
